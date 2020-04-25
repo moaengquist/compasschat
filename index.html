@@ -7,6 +7,8 @@
 
         <script src="https://cdn.pubnub.com/sdk/javascript/pubnub.4.21.7.js"></script>
         
+
+
         <!-- The orientation part -->
         <h1>Hi!</h1>
         <h3>First, turn the orientation on</h3>
@@ -38,12 +40,18 @@
                }
           
               document.getElementById("heading").innerHTML = heading.toFixed([0]);
+
+              if(heading.toFixed([0]==180)){
+                document.getElementById("heading").innerHTML = "South"
+              }
             }
           </script>
           
-          <input type="button" value="Ok to see orientation" onClick="givePermission();" />
-          <p>Your current orientation: </p><p id="heading">n/a</p>
-          <hr/>
+
+        <input type="button" value="Ok to see orientation" onClick="givePermission();" />
+        <p>Your current orientation: </p><p id="heading">n/a</p>
+        <p id="position"></p>
+        <hr/>
 
 
           
