@@ -41,10 +41,12 @@
               if (typeof event.webkitCompassHeading !== "undefined") {
                  heading = event.webkitCompassHeading;
                }
-          
+              
               document.getElementById("heading").innerHTML = heading.toFixed([0]);
               //document.getElementById("heading").innerHTML = 'funkar'
 
+              while(heading){
+              
               if (heading.toFixed([0])==0){
                 document.getElementById("chatName").innerHTML = 'You are in chat North'
               }
@@ -59,7 +61,7 @@
               }
               else{
                 document.getElementById("chatName").innerHTML = 'You are in chat Demo'
-              }
+              }}
             }
           </script>
           
@@ -90,8 +92,8 @@
             });
 
 
-            pubnubDemo.publish({ message: { "color" : "blue" }, channel: 'demo_tutorial' });
-            pubnubDemo.publish({ message: 'hello', channel: 'demo_tutorial' });
+            //pubnubDemo.publish({ message: { "color" : "blue" }, channel: 'demo_tutorial' });
+            //pubnubDemo.publish({ message: 'hello', channel: 'demo_tutorial' });
 
             // Subscribe to the demo_tutorial channel pubnub
             pubnubDemo.addListener({
