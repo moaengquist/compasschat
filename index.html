@@ -45,9 +45,9 @@
               document.getElementById("heading").innerHTML = heading.toFixed([0]);
               //document.getElementById("heading").innerHTML = 'funkar'
 
-              while(heading){
               
-              if (heading.toFixed([0])==0){
+              
+              if (heading.toFixed([0])==360){
                 document.getElementById("chatName").innerHTML = 'You are in chat North'
               }
               if (heading.toFixed([0])==90){
@@ -61,8 +61,9 @@
               }
               else{
                 document.getElementById("chatName").innerHTML = 'You are in chat Demo'
+                getMessages('demo_tutorial')
               }}
-            }
+            
           </script>
           
 
@@ -86,13 +87,14 @@
         <script type="text/javascript">
 
         // Config to PubNub
+        
             var pubnubDemo = new PubNub({
                 publishKey: 'pub-c-e8b82b68-be44-415e-80f8-c41c67c39f6b',
                 subscribeKey: 'sub-c-3148dabe-85fd-11ea-9e86-0adc820ce981'
             });
 
 
-            //pubnubDemo.publish({ message: { "color" : "blue" }, channel: 'demo_tutorial' });
+            pubnubDemo.publish({ message: { "color" : "blue" }, channel: 'demo_tutorial' });
             //pubnubDemo.publish({ message: 'hello', channel: 'demo_tutorial' });
 
             // Subscribe to the demo_tutorial channel pubnub
@@ -120,17 +122,31 @@
             message: (message) => {
               // handle message
               const channelName = message.channel;
-              const channelGroup = message.subscription;
               const msg = message.message;
               console.log(msg)
             }
           });
+          
+          function getMessages(channel){
+            pubnubDemo.addListener({
+            message: function(message){
+              if(message.channel==channel){
+                console.log(message)
+                document.getElementById('messages').innerHTML = "<div>" + message + "</div>"
+              }
+            }
+            })
+
+            pubnubDemo.subscribe({
+            channels: [channel]
+            });
+        }
             
     </script>
 
 
     <!-- The chat part -->
-    <div></div>
+    <div id="messages"></div>
 
     
 
