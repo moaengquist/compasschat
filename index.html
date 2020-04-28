@@ -42,14 +42,23 @@
                  heading = event.webkitCompassHeading;
                }
           
-              //document.getElementById("heading").innerHTML = 'heading.toFixed([0])';
-              document.getElementById("heading").innerHTML = 'funkar'
+              document.getElementById("heading").innerHTML = heading.toFixed([0]);
+              //document.getElementById("heading").innerHTML = 'funkar'
 
+              if (heading.toFixed([0])==0){
+                document.getElementById("chatName").innerHTML = 'You are in chat North'
+              }
+              if (heading.toFixed([0])==90){
+                document.getElementById('chatName').innerHTML = 'You are in chat East'
+              }
               if (heading.toFixed([0])==180){
-                document.getElementById("position").innerHTML = 'funkar'
+                document.getElementById("chatName").innerHTML = 'You are in chat South'
+              }
+              if (heading.toFixed([0])==270){
+                document.getElementById("chatName").innerHTML = 'You are in chat West'
               }
               else{
-                document.getElementById('position').innerHTML = ''
+                document.getElementById("chatName").innerHTML = 'You are in chat Demo'
               }
             }
           </script>
@@ -63,7 +72,7 @@
 
           
         <!-- The form part -->
-        <h3>You are in chat</h3>
+        <h3 id="chatName">You are in chat Demo</h3>
 
         <form id="subform">
             <label>Send a message in the chat:</label>
