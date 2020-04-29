@@ -1,168 +1,159 @@
-
 <html>
     <head>
         <script src="https://cdn.pubnub.com/sdk/javascript/pubnub.4.21.7.js"></script>
     </head>
     <body>
 
-        <script src="https://cdn.pubnub.com/sdk/javascript/pubnub.4.21.7.js"></script>
+      <script src="https://cdn.pubnub.com/sdk/javascript/pubnub.4.21.7.js"></script>
+
+      <script>
+
+        //Ask for orientation
+        function givePermission() {
+          // feature detect
+          if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+            DeviceOrientationEvent.requestPermission()
+              .then(permissionState => {
+                if (permissionState === 'granted') {
+                  window.addEventListener('deviceorientation', handleOrientation, true);
+                }
+              })
+              .catch(console.error);
+          } else {
+            // just serve up the EventListener w/o permissions here
+            window.addEventListener('deviceorientation', handleOrientation, true);
+          }
+        }
         
-
-
-        <!-- The orientation part -->
-        <h1>Hi!</h1>
-        <h3>First, turn the orientation on</h3>
-
-        <script>
-
-          //Ask for orientation
-            function givePermission() {
-              // feature detect
-              if (typeof DeviceOrientationEvent.requestPermission === 'function') {
-                DeviceOrientationEvent.requestPermission()
-                  .then(permissionState => {
-                    if (permissionState === 'granted') {
-                      window.addEventListener('deviceorientation', handleOrientation, true);
-                    }
-                  })
-                  .catch(console.error);
-              } else {
-                // just serve up the EventListener w/o permissions here
-               window.addEventListener('deviceorientation', handleOrientation, true);
-              }
+        //When we have access to orientation
+        function handleOrientation(event)
+        {
+          var heading = event.alpha;
+          var compass = heading.toFixed([0])
+        
+          // some browsers don't understand "alpha"
+          if (typeof event.webkitCompassHeading !== "undefined") {
+              heading = event.webkitCompassHeading;
             }
           
-            //When we have access to orientation
-            function handleOrientation(event)
-            {
-              var heading = event.alpha;
-            
-              // some browsers don't understand "alpha"
-              if (typeof event.webkitCompassHeading !== "undefined") {
-                 heading = event.webkitCompassHeading;
-               }
-              
-              document.getElementById("heading").innerHTML = heading.toFixed([0]);
-              //document.getElementById("heading").innerHTML = 'funkar'
-
-              
-              
-              if (heading.toFixed([0])==360){
-                document.getElementById("chatName").innerHTML = 'You are in chat North'
-              }
-              if (heading.toFixed([0])==90){
-                document.getElementById('chatName').innerHTML = 'You are in chat East'
-              }
-              if (heading.toFixed([0])==180){
-                document.getElementById("chatName").innerHTML = 'You are in chat South'
-              }
-              if (heading.toFixed([0])==270){
-                document.getElementById("chatName").innerHTML = 'You are in chat West'
-              }
-              else{
-                document.getElementById("chatName").innerHTML = 'You are in chat Demo'
-                getMessages('demo_tutorial')
-              }}
-            
-          </script>
+          document.getElementById("heading").innerHTML = heading.toFixed([0]);
+          //document.getElementById("heading").innerHTML = 'funkar'
           
-
-        <input type="button" value="Allow to use orientation" onClick="givePermission();" />
-        <p>Your current orientation: </p><p id="heading">n/a</p>
-        <p id="position"></p>
-        <hr/>
-
-
-          
-        <!-- The form part -->
-        <h3 id="chatName">You are in chat Demo</h3>
-
-        <form id="subform">
-            <label>Send a message in the chat:</label>
-            <input type="text" id="inputvalue" required></input>
-            <input type="submit"></input>    
-        </form>
-
-        <!-- Instantiate PubNub -->
-        <script type="text/javascript">
+          if(355 < compass < 5){
+            document.getElementById("chatName").innerHTML = 'You are in chat North'
+          }
+          if(85 < compass < 95){
+            document.getElementById("chatName").innerHTML = 'You are in chat North'
+          }
+          if(175 < compass < 185){
+            document.getElementById("chatName").innerHTML = 'You are in chat North'
+          }
+          if(265 < compass < 275){
+            document.getElementById("chatName").innerHTML = 'You are in chat North'
+          }
+          else{
+            document.getElementById("chatName").innerHTML = 'You are in chat North'
+          }
+        }
 
         // Config to PubNub
-        
-            var pubnubDemo = new PubNub({
-                publishKey: 'pub-c-e8b82b68-be44-415e-80f8-c41c67c39f6b',
-                subscribeKey: 'sub-c-3148dabe-85fd-11ea-9e86-0adc820ce981'
-            });
+        var pubnubDemo = new PubNub({
+          publishKey: 'pub-c-e8b82b68-be44-415e-80f8-c41c67c39f6b',
+          subscribeKey: 'sub-c-3148dabe-85fd-11ea-9e86-0adc820ce981'
+        });
 
+        // Subscribe to the channel
+        pubnubDemo.subscribe({
+          channels: ['demo_tutorial']
+        });
 
-            pubnubDemo.publish({ message: { "color" : "blue" }, channel: 'demo_tutorial' });
-            //pubnubDemo.publish({ message: 'hello', channel: 'demo_tutorial' });
-
-            // Subscribe to the demo_tutorial channel pubnub
-            pubnubDemo.addListener({
-            message: function(message){
-            console.log(message)
-            }
-            })
-
-            pubnubDemo.subscribe({
-            channels: ['demo_tutorial']
-            });
-
-            //sends a message
-            const form = document.getElementById("subform")
-            form.addEventListener("submit", function(event){
-                const inputvalue = document.getElementById("inputvalue").value
-                pubnubDemo.publish({ message: {inputvalue}, channel: 'demo_tutorial' }) 
-                const thevalue = document.getElementById("inputvalue")
-                thevalue.value = ''
-            })
-
-            //recive messages
-            message = pubnubDemo.addListener({
-            message: (message) => {
-              // handle message
-              const channelName = message.channel;
-              const msg = message.message;
-              console.log(msg)
-            }
-          });
-          
-          function getMessages(channel){
-            pubnubDemo.addListener({
-            message: function(message){
-              if(message.channel==channel){
-                console.log(message)
-                document.getElementById('messages').innerHTML = "<div>" + message + "</div>"
-              }
-            }
-            })
-
-            pubnubDemo.subscribe({
-            channels: [channel]
-            });
-        }
+        // Function that fetch for the 25 latest messages in the chanel
+        function getOldMessages(channel){
+          pubnubDemo.fetchMessages({
+            channels: [channel],
+            count: 100
+          },
+          (status, result)=>{
+            document.getElementById("mess").innerHTML = ''
+            messages = result.channels[channel]
             
-    </script>
+            messageTexxt = messages.map(messageText => messageText.message)
+            console.log(messages)
+            messageTexxt.map(text=>console.log(text))
+           
+            messageTexxt.map(messageText =>
+            createDIV(messageText))
+            //document.getElementById("mess").innerHTML = messageTexxt
+          })
+        }
+
+        // Funtion that listens for new messages      
+        function getNewMessages(){
+          pubnubDemo.addListener({
+            message: function(message){
+              const messageText = message.message
+              const messageChannel = message.channel
+            
+              console.log(message.message)
+              createDIV(message.message)
+              //document.getElementById("mess").innerHTML = message.message
+            }
+          })
+
+        }
+
+        // Funtion that takes text messages and putting them in the DOM tree
+        function createDIV(text){
+          var divnode = document.createElement('div')
+          var texttodive = document.createTextNode(text)
+          divnode.appendChild(texttodive)
+          document.getElementById("mess").appendChild(divnode)
+        }
+
+        // Function that listens to messanges being published in the form
+        function submitListerner(chanel){
+          window.addEventListener("submit", function(event){
+            const inputvalue = document.getElementById("inputvalue").value
+            publishNewMessage(inputvalue, chanel)
+            }
+          )
+        }
+
+        // Function that publish a message to the channel
+        function publishNewMessage(messageText, channel){
+          pubnubDemo.publish({ message: messageText, channel: channel });
+        }
 
 
-    <!-- The chat part -->
-    <div id="messages"></div>
+        //getOldMessages('north')
+        getOldMessages('demo_tutorial')
+        submitListerner('demo_tutorial')
+        getNewMessages()
+        //publishNewMessage("black", 'north')
+        
+      </script>
+          
 
-    
+      <h1>Hi!</h1>
+      <h3>First, turn the orientation on</h3>
+      <input type="button" value="Allow to use orientation" onClick="givePermission();" />
+      <p>
+        <div>Your current orientation: </div>
+        <div id="heading">n/a</div>
+      </p>
+      <hr/>
+      
+      <h2 id="chatName">You are in chat</h2>
+      <h4>Messages:</h4>
+      <div id="mess"></div>
+      </br>
+      
+      <form id="subform">
+        <label>Send a message in the chat:</label>
+        <input type="text" id="inputvalue" required></input>
+        <input type="submit"></input>    
+    </form>
 
-    <!-- <form id="subform" onsubmit="publishfunction()">
-        <input type="text" name="inputvalue">
-        </input>
-        <input type="submit">
-    </input>    
-    </form> -->
-    
-    
-
-    </body>
-    </html>
-    
-
-
-    
-    
+  </body>
+</html>
+      
