@@ -54,9 +54,11 @@
           }
           else{
             document.getElementById("chatName").innerHTML = 'Looking for a chat...'
+            window.requestAnimationFrame(step)
           }
           }
           window.requestAnimationFrame(step)
+          console.log('hej moa')
         }
 
         // Config to PubNub
