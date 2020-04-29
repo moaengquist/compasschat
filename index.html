@@ -36,8 +36,10 @@
               heading = event.webkitCompassHeading;
             }
           
-          document.getElementById("heading").innerHTML = heading.toFixed([0]);
+          document.getElementById("heading").innerHTML = compass;
           //document.getElementById("heading").innerHTML = 'funkar'
+          document.getElementById("heading").innerHTML = heading
+          
           
           if(355 < compass < 5){
             document.getElementById("chatName").innerHTML = 'You are in chat North'
@@ -140,6 +142,7 @@
       <p>
         <div>Your current orientation: </div>
         <div id="heading">n/a</div>
+        <div id="test"></div>
       </p>
       <hr/>
       
