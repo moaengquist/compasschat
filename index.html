@@ -58,6 +58,8 @@
           }
         }
 
+        window.addEventListener('deviceorientation', handleOrientation); 
+        
         // Config to PubNub
         var pubnubDemo = new PubNub({
           publishKey: 'pub-c-e8b82b68-be44-415e-80f8-c41c67c39f6b',
