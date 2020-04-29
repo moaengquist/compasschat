@@ -38,12 +38,13 @@
           document.getElementById("heading").innerHTML = heading.toFixed(0);
           //document.getElementById("heading").innerHTML = 'funkar'
           
-          while(false){
+            test='go'
+          while(test=='go'){
           if(355 < heading < 5){
             document.getElementById("chatName").innerHTML = 'You are in chat North'
             getOldMessages('north')
             handleOrientation()
-            return false
+            return test='go'
           }
           if(85 < heading < 95){
             document.getElementById("chatName").innerHTML = 'You are in chat East'
@@ -57,7 +58,7 @@
           else{
             document.getElementById("chatName").innerHTML = 'Looking for a chat...'
             getOldMessages('demo_tutorial')
-            return false
+            return test='go'
           }}
         }
 
