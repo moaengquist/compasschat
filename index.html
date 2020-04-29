@@ -29,13 +29,15 @@
         function handleOrientation(event)
         {
           var heading = event.alpha;
+          
         
           // some browsers don't understand "alpha"
           if (typeof event.webkitCompassHeading !== "undefined") {
               heading = event.webkitCompassHeading;
             }
           
-          document.getElementById("heading").innerHTML = heading.toFixed(0);
+            console.log(heading)
+          //document.getElementById("heading").innerHTML = heading.toFixed(0);
           //document.getElementById("heading").innerHTML = 'funkar'
           
           changed(heading)
@@ -43,23 +45,25 @@
         }
 
         function changed(heading){
-          if(355 < heading < 5){
+          console.log(heading)
+          if(heading > 355 && heading < 5){
             document.getElementById("chatName").innerHTML = 'You are in chat North'
             getOldMessages('north')
           }
-          if(85 < heading < 95){
+          if(heading > 85 && heading < 95){
             document.getElementById("chatName").innerHTML = 'You are in chat East'
 
           }
-          if(175 < heading < 185){
+          if(heading > 175 && heading < 185){
             document.getElementById("chatName").innerHTML = 'You are in chat South'
           }
-          if(265 < heading < 275){
+          if(heading > 265 && heading < 175){
             document.getElementById("chatName").innerHTML = 'You are in chat West'
           }
           else{
             document.getElementById("chatName").innerHTML = 'Looking for a chat...'
             getOldMessages('demo_tutorial')
+            console.log('här')
           }
         }
 
