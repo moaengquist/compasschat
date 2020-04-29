@@ -29,28 +29,26 @@
         function handleOrientation(event)
         {
           var heading = event.alpha;
-          var compass = heading.toFixed([0])
         
           // some browsers don't understand "alpha"
           if (typeof event.webkitCompassHeading !== "undefined") {
               heading = event.webkitCompassHeading;
             }
           
-          document.getElementById("heading").innerHTML = compass;
+          document.getElementById("heading").innerHTML = heading.toFixed([0]);
           //document.getElementById("heading").innerHTML = 'funkar'
-          document.getElementById("heading").innerHTML = heading
           
           
-          if(355 < compass < 5){
+          if(355 < heading < 5){
             document.getElementById("chatName").innerHTML = 'You are in chat North'
           }
-          if(85 < compass < 95){
+          if(85 < heading < 95){
             document.getElementById("chatName").innerHTML = 'You are in chat East'
           }
-          if(175 < compass < 185){
+          if(175 < heading < 185){
             document.getElementById("chatName").innerHTML = 'You are in chat South'
           }
-          if(265 < compass < 275){
+          if(265 < heading < 275){
             document.getElementById("chatName").innerHTML = 'You are in chat West'
           }
           else{
