@@ -38,16 +38,18 @@
           document.getElementById("heading").innerHTML = heading.toFixed(0);
           //document.getElementById("heading").innerHTML = 'funkar'
           
-           var test='go'
-          while(test=='go'){
+          changed(heading)
+          
+        }
+
+        function changed(heading){
           if(355 < heading < 5){
             document.getElementById("chatName").innerHTML = 'You are in chat North'
             getOldMessages('north')
-            handleOrientation()
-            return test='go'
           }
           if(85 < heading < 95){
             document.getElementById("chatName").innerHTML = 'You are in chat East'
+
           }
           if(175 < heading < 185){
             document.getElementById("chatName").innerHTML = 'You are in chat South'
@@ -58,11 +60,8 @@
           else{
             document.getElementById("chatName").innerHTML = 'Looking for a chat...'
             getOldMessages('demo_tutorial')
-            return test='go'
-          }}
+          }
         }
-
-        window.addEventListener('deviceorientation', handleOrientation); 
 
         // Config to PubNub
         var pubnubDemo = new PubNub({
