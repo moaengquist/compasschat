@@ -35,10 +35,11 @@
               heading = event.webkitCompassHeading;
             }
           
-          document.getElementById("heading").innerHTML = heading.toFixed([0]);
+          document.getElementById("heading").innerHTML = heading.toFixed(0);
           //document.getElementById("heading").innerHTML = 'funkar'
           
           
+          function step(){
           if(355 < heading < 5){
             document.getElementById("chatName").innerHTML = 'You are in chat North'
           }
@@ -54,6 +55,8 @@
           else{
             document.getElementById("chatName").innerHTML = 'Looking for a chat...'
           }
+          }
+          window.requestAnimationFrame(step)
         }
 
         // Config to PubNub
