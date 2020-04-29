@@ -38,7 +38,7 @@
           document.getElementById("heading").innerHTML = heading.toFixed(0);
           //document.getElementById("heading").innerHTML = 'funkar'
           
-          (heading==10)?(document.getElementById("chatName").innerHTML="WOWOWOWO"):(document.getElementById("chatName").innerHTML ="Jaa...")
+          (heading>90)?(document.getElementById("chatName").innerHTML="WOWOWOWO"):(document.getElementById("chatName").innerHTML ="Jaa...")
           
           if(355 < heading < 5){
             document.getElementById("chatName").innerHTML = 'You are in chat North'
@@ -54,7 +54,6 @@
           }
           else{
             document.getElementById("chatName").innerHTML = 'Looking for a chat...'
-            
           }
           
           
