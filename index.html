@@ -40,7 +40,13 @@
           document.getElementById("heading").innerHTML = heading.toFixed(0);
           //document.getElementById("heading").innerHTML = 'funkar'
           
-          if(heading > 355 && heading < 5){
+          if(heading > 355){
+            document.getElementById("chatName").innerHTML = 'You are in chat North'
+            getOldMessages('north')
+            getNewMessages()
+            submitListerner('north')
+          }
+          if(heading < 5){
             document.getElementById("chatName").innerHTML = 'You are in chat North'
             getOldMessages('north')
             getNewMessages()
