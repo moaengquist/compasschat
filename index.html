@@ -48,18 +48,21 @@
           }
           if(heading > 85 && heading < 95){
             document.getElementById("chatName").innerHTML = 'You are in chat East'
+            getOldMessages('east')
 
           }
           if(heading > 175 && heading < 185){
             document.getElementById("chatName").innerHTML = 'You are in chat South'
+            getOldMessages('south')
           }
           if(heading > 265 && heading < 175){
             document.getElementById("chatName").innerHTML = 'You are in chat West'
+            getOldMessages('west')
           }
-          else{
-            document.getElementById("chatName").innerHTML = 'Looking for a chat...'
-            document.getElementById("mess").innerHTML = ''
-          }
+          // else{
+          //   document.getElementById("chatName").innerHTML = 'Looking for a chat...'
+          //   document.getElementById("mess").innerHTML = ''
+          // }
         }
 
         // Config to PubNub
@@ -134,7 +137,7 @@
         //getOldMessages('north')
         getOldMessages('demo_tutorial')
         getNewMessages()
-        //publishNewMessage("black", 'north')
+        
         
       </script>
           
