@@ -43,7 +43,7 @@
           if(heading > 355){
             document.getElementById("chatName").innerHTML = 'You are in chat North'
             getOldMessages('north')
-            getNewMessages()
+            getNewMessages('north')
             submitListerner('north')
           }
           if(heading < 5){
@@ -103,14 +103,14 @@
         }
 
         // Funtion that listens for new messages      
-        function getNewMessages(){
+        function getNewMessages(channel){
           pubnubDemo.addListener({
             message: function(message){
               const messageText = message.message
               const messageChannel = message.channel
             
               console.log(message.message)
-              createDIV(message.message)
+              messageChannel==channel?createDIV(message.message):null
               //document.getElementById("mess").innerHTML = message.message
             }
           })
@@ -142,7 +142,9 @@
 
         //getOldMessages('north')
         getOldMessages('demo_tutorial')
-        getNewMessages()
+        submitListerner('demo_tutorial')
+        getNewMessages('demo_tutorial')
+        
         
         
       </script>
