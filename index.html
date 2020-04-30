@@ -1,6 +1,7 @@
 <html>
     <head>
         <script src="https://cdn.pubnub.com/sdk/javascript/pubnub.4.21.7.js"></script>
+        <link rel="stylesheet" type="text/css" href="index.css">
     </head>
     <body>
 
@@ -149,7 +150,7 @@
         
       </script>
           
-
+      <div class='intro'>
       <h1>Hi!</h1>
       <h3>First, turn the orientation on</h3>
       <input type="button" value="Allow to use orientation" onClick="givePermission();" />
@@ -158,8 +159,10 @@
         <div id="heading">n/a</div>
         <div id="test"></div>
       </p>
+    </div>
       <hr/>
-      
+    
+      <div class='chat'>
       <h2 id="chatName">You are in chat</h2>
       <h4>Messages:</h4>
       <div id="mess"></div>
@@ -170,7 +173,7 @@
         <input type="text" id="inputvalue" required></input>
         <input type="submit"></input>    
     </form>
-
+  </div>
   </body>
 </html>
       

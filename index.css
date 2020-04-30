@@ -1,0 +1,12 @@
+body{
+    background-color: aquamarine;
+    width: 350px;
+}
+.intro{
+    background-color: bisque;
+    padding: 30px;
+}
+.chat{
+    background-color: bisque;
+    padding: 20px
+}
