@@ -1,12 +1,14 @@
 body{
-    background-color: aquamarine;
+    background-color: lightblue;
     width: 350px;
 }
 .intro{
     background-color: bisque;
     padding: 30px;
+    border-radius: 40px;
 }
 .chat{
     background-color: bisque;
-    padding: 20px
+    padding: 20px;
+    border-radius: 40px;
 }
