@@ -29,47 +29,113 @@
         //When we have access to orientation
         function handleOrientation(event)
         {
-          var heading = event.alpha;
-          
+          var heading = event.alpha;          
         
           // some browsers don't understand "alpha"
           if (typeof event.webkitCompassHeading !== "undefined") {
-              heading = event.webkitCompassHeading;
+              heading = event.webkitCompassHeading;  
             }
-          
           
           document.getElementById("heading").innerHTML = heading.toFixed(0);
           //document.getElementById("heading").innerHTML = 'funkar'
           
-          if(heading > 355){
+          // NORTH
+          if(heading > 340){
             document.getElementById("chatName").innerHTML = 'You are in chat North'
             getOldMessages('north')
-            getNewMessages('north')
-            submitListerner('north')
+            
+            pubnubDemo.addListener({
+              message: function(message){
+              console.log(message)
+              message.channel==='north'?createDIV(message.message):null
+             }
+            })
+
+            pubnubDemo.subscribe({
+            channels: ['north']
+            });
+
+            document.getElementById('press').addEventListener("click", function(){
+              const inputvalue = document.getElementById('input').value
+              console.log(inputvalue)
+              pubnubDemo.publish({ message: inputvalue, channel: 'north' });
+              document.getElementById('input').value = ''
+            })
           }
-          if(heading < 5){
-            document.getElementById("chatName").innerHTML = 'You are in chat North'
-            getOldMessages('north')
-            getNewMessages()
-            submitListerner('north')
-          }
-          if(heading > 85 && heading < 95){
+
+          // EAST
+          if(heading > 70 && heading < 110){
             document.getElementById("chatName").innerHTML = 'You are in chat East'
             getOldMessages('east')
+            
+            pubnubDemo.addListener({
+              message: function(message){
+              console.log(message)
+              message.channel==='east'?createDIV(message.message):null
+             }
+            })
+
+            pubnubDemo.subscribe({
+            channels: ['east']
+            });
+
+            document.getElementById('press').addEventListener("click", function(){
+              const inputvalue = document.getElementById('input').value
+              console.log(inputvalue)
+              pubnubDemo.publish({ message: inputvalue, channel: 'east' });
+              document.getElementById('input').value = ''
+            })
 
           }
-          if(heading > 175 && heading < 185){
+
+          // SOUTH
+          if(heading > 160 && heading < 200){
             document.getElementById("chatName").innerHTML = 'You are in chat South'
             getOldMessages('south')
+            
+            pubnubDemo.addListener({
+              message: function(message){
+              console.log(message)
+              message.channel==='south'?createDIV(message.message):null
+             }
+            })
+
+            pubnubDemo.subscribe({
+            channels: ['south']
+            });
+
+            document.getElementById('press').addEventListener("click", function(){
+              const inputvalue = document.getElementById('input').value
+              console.log(inputvalue)
+              pubnubDemo.publish({ message: inputvalue, channel: 'south' });
+              document.getElementById('input').value = ''
+            })
+
           }
-          if(heading > 265 && heading < 175){
+
+          // WEST
+          if(heading > 250 && heading < 290){
             document.getElementById("chatName").innerHTML = 'You are in chat West'
             getOldMessages('west')
+            
+            pubnubDemo.addListener({
+              message: function(message){
+              console.log(message)
+              message.channel==='west'?createDIV(message.message):null
+             }
+            })
+
+            pubnubDemo.subscribe({
+            channels: ['west']
+            });
+
+            document.getElementById('press').addEventListener("click", function(){
+              const inputvalue = document.getElementById('input').value
+              console.log(inputvalue)
+              pubnubDemo.publish({ message: inputvalue, channel: 'west' });
+              document.getElementById('input').value = ''
+            })
           }
-          // else{
-          //   document.getElementById("chatName").innerHTML = 'Looking for a chat...'
-          //   document.getElementById("mess").innerHTML = ''
-          // }
         }
 
         // Config to PubNub
@@ -79,9 +145,9 @@
         });
 
         // Subscribe to the channel
-        pubnubDemo.subscribe({
-          channels: ['demo_tutorial']
-        });
+        // pubnubDemo.subscribe({
+        //   channels: ['demo_tutorial']
+        // });
 
         // Function that fetch for the 25 latest messages in the chanel
         function getOldMessages(channel){
@@ -103,20 +169,20 @@
           })
         }
 
-        // Funtion that listens for new messages      
-        function getNewMessages(channel){
-          pubnubDemo.addListener({
-            message: function(message){
-              const messageText = message.message
-              const messageChannel = message.channel
+        // // Funtion that listens for new messages      
+        // function getNewMessages(channel){
+        //   pubnubDemo.addListener({
+        //     message: function(message){
+        //       const messageText = message.message
+        //       const messageChannel = message.channel
             
-              console.log(message.message)
-              messageChannel==channel?createDIV(message.message):null
-              //document.getElementById("mess").innerHTML = message.message
-            }
-          })
+        //       console.log(message.message)
+        //       messageChannel==channel?createDIV(message.message):null
+        //       //document.getElementById("mess").innerHTML = message.message
+        //     }
+        //   })
 
-        }
+        // }
 
         // Funtion that takes text messages and putting them in the DOM tree
         function createDIV(text){
@@ -126,25 +192,27 @@
           document.getElementById("mess").appendChild(divnode)
         }
 
-        // Function that listens to messanges being published in the form
-        function submitListerner(chanel){
-          window.addEventListener("submit", function(event){
-            const inputvalue = document.getElementById("inputvalue").value
-            publishNewMessage(inputvalue, chanel)
-            }
-          )
-        }
+        // // Function that listens to messanges being published in the form
+        // function submitListerner(chanel){
+        //   window.addEventListener("submit", function(event){
+        //     const inputvalue = document.getElementById("inputvalue").value
+        //     console.log(inputvalue)
+        //     console.log(chanel)
+        //     publishNewMessage(inputvalue, chanel)
+        //     }
+        //   )
+        // }
 
-        // Function that publish a message to the channel
-        function publishNewMessage(messageText, channel){
-          pubnubDemo.publish({ message: messageText, channel: channel });
-        }
+        // // Function that publish a message to the channel
+        // function publishNewMessage(messageText, channel){
+        //   pubnubDemo.publish({ message: messageText, channel: channel });
+        // }
 
 
         //getOldMessages('north')
-        getOldMessages('demo_tutorial')
-        submitListerner('demo_tutorial')
-        getNewMessages('demo_tutorial')
+        //getOldMessages('demo_tutorial')
+        //submitListerner('demo_tutorial')
+        //getNewMessages('demo_tutorial')
         
         
         
@@ -153,7 +221,7 @@
       <div class='intro'>
       <h1>Hi!</h1>
       <h3>First, turn the orientation on</h3>
-      <input type="button" value="Allow to use orientation" onClick="givePermission();" />
+      <input type="button" id="premissionbutton" value="Allow to use orientation" onClick="givePermission();" />
       <p>
         <div>Your current orientation: </div>
         <div id="heading">n/a</div>
@@ -168,11 +236,16 @@
       <div id="mess"></div>
       </br>
       
-      <form id="subform">
+      <!-- <form id="subform">
         <label>Send a message in the chat:</label>
         <input type="text" id="inputvalue" required></input>
-        <input type="submit"></input>    
-    </form>
+        <input type="button" value="Send" onClick='sendMessage()'></input>    
+    </form> -->
+    <div id="send">
+      <input id='input'></input>
+      <button id='press'>Send</button>
+    </div>
+
   </div>
   </body>
 </html>
